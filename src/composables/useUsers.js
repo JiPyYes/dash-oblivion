@@ -7,12 +7,6 @@ const userlist = ref([{
     password:'admin'
 }])
 
-function logout(){
-    if (currentAccount != ''){
-        currentAccount.value = ''
-    }
-}
-
 export default function useUsers(){
-    return {userlist,currentAccount,logout}
+    return {userlist,currentAccount}
 }

@@ -19,13 +19,15 @@ function logincheck(){
         isvalid = false
     }
 
-    if(!user.password===dataget.password){
+    if(!user?.password===dataget.password){
         isvalid = false
     }
 
     if(isvalid){
         users.currentAccount.value = user
-    } else errormsg.value = 'Неправильный логин или пароль'
+    } else {
+        errormsg.value = 'Неправильный логин или пароль'
+    }
 }
 </script>
 
@@ -34,8 +36,8 @@ function logincheck(){
         Вход в аккаунт:
         <input type="text" v-model="dataget.username" placeholder="Введите имя">
         <input type="text" v-model="dataget.password" placeholder="Введите пароль">
-        {{ errormsg }}
         <button @click="logincheck">Войти</button>
+        {{ errormsg }}
     </div>
 </template>
 

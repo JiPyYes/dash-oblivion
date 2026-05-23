@@ -6,13 +6,16 @@ import review from "./components/review.vue";
 import sales from "./components/sales.vue";
 import Login from "./components/login.vue";
 import page404 from "./components/page404.vue";
+import useUsers from "./composables/useUsers";
+
+const users = useUsers()
 
 const routes = [
-    {path:'/',component:review,name:'review'},
+    {path:'/',component:review,name:'review', meta:{reqauth:true}},
     {path:'/login',component:Login,name:'login'},
-    {path:'/sales', component:sales, name:'sales'},
-    {path:'/finances',component:finances,name:'finances'},
-    {path:'/clients',component:clients,name:'clients'},
+    {path:'/sales', component:sales, name:'sales',meta:{reqauth:true}},
+    {path:'/finances',component:finances,name:'finances',meta:{reqauth:true}},
+    {path:'/clients',component:clients,name:'clients',meta:{reqauth:true}},
 
     {path:'/:pathName(.*)', component: page404, name:'404'},
 
@@ -24,5 +27,7 @@ export const router = createRouter({
 })
 
 router.beforeEach((to, from, next) =>{
-    next()
+    if(users.currentAccount.value == '' && to.meta.reqauth){
+        next('/login')
+    } else next()
 })
