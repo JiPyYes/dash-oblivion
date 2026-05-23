@@ -1,6 +1,6 @@
 import { ref } from "vue"
 
-const currentAccount = ref('')
+const currentAccount = ref('admin')
 
 const userlist = ref([{
     username:'admin',
