@@ -2,7 +2,8 @@
 import VueApexCharts from 'vue3-apexcharts';
 import useData from '../composables/useData';
 import { reactive, ref } from 'vue';
-const data = useData()
+import { computed } from 'vue';
+const udata = useData()
 const series = ref([
   { name: 'Выручка', data: [30, 40, 35, 50] },
   { name: 'Расходы', data: [20, 25, 20, 30] },
@@ -56,49 +57,63 @@ function ばか(дата){
             break;
     }
 }
+
+const filters = reactive({
+    manager: '',
+    status: '',
+});
+
+const filteredDeals = computed(() => {
+    return udata.offers.value.filter(item => {
+        const matchManager = filters.manager ? item.manager.toLowerCase().includes(filters.manager.toLowerCase()) : true
+        const matchStatus = filters.status ? item.status === filters.status : true
+
+        return matchManager && matchStatus 
+    })
+})
 </script>
 
 <template>
 <div class="main_metrics">
     <div class="revenue">
         Выручка
-        {{ data.main_metrics_module.revenue }}
+        {{ udata.totalCompanyMetrics.value.revenue }}
         руб.
     </div>
     <div class="earnings">
         Прибыль
-        {{ data.main_metrics_module.earnings }}
+        {{ udata.totalCompanyMetrics.value.earnings }}
         руб.
     </div>
     <div class="clients">
         Клиенты
-        {{ data.main_metrics_module.clients }}
+        {{ udata.totalCompanyMetrics.value.clients }}
         чел.
     </div>
     <div class="conversion">
         Конверсия
-        {{ data.main_metrics_module.conversion }}
+        {{ udata.totalCompanyMetrics.value.conversion }}
         чел.
     </div>
 
     <div class="diagramm">
         Распределение выручки по направлениям бизнеса
-        <div :style="data.diagramm_style"></div>
-        <div :style="{'--c1':data.color_bank.color1,
-            '--c2':data.color_bank.color2,
-            '--c3':data.color_bank.color3
+        <div :style="udata.diagramm_style"></div>
+        <div :style="{'--c1':udata.color_bank.color1,
+            '--c2':udata.color_bank.color2,
+            '--c3':udata.color_bank.color3
         }">
             <div>
                 <div class="square color1"></div>
-                {{ data.diagramm_distribution.wholesale }}% опт
+                {{ udata.diagramm_distribution.wholesale }}% опт
             </div>
             <div>
                 <div class="square color2"></div>
-                {{ data.diagramm_distribution.retail }}% розница
+                {{ udata.diagramm_distribution.retail }}% розница
             </div>
             <div>
                 <div class="square color3"></div>
-                {{ data.diagramm_distribution.service }}% услуги
+                {{ udata.diagramm_distribution.service }}% услуги
             </div>
         </div>
     </div>
@@ -108,10 +123,49 @@ function ばか(дата){
         <button @click="ばか('квартал')">Квартал</button>
         <button @click="ばか('年')">Год</button>
     </div>
+    <div class="table">
+        <input type="text" v-model="filters.manager">
+        <select v-model="filters.status">
+            <option value="">Статус</option>
+            <option value="В процессе">В процессе</option>
+            <option value="Завершена">Завершена</option>
+            <option value="Отклонена">Отклонена</option>
+        </select>
+        <div class="row">
+            <div class="offerelement ofheader">Номер сделки</div>
+            <div class="offerelement ofheader">Дата сделки</div>
+            <div class="offerelement ofheader">Имя сделки</div>
+            <div class="offerelement ofheader">Имя менеджера</div>
+            <div class="offerelement ofheader">Статус сделки</div>
+            <div class="offerelement ofheader">Прибыль со сделки</div>
+        </div>
+        <div class="row" v-for="offer in filteredDeals">
+            <div class="offerelement">{{ offer.offerid }}</div>
+            <div class="offerelement">{{ offer.date }}</div>
+            <div class="offerelement">{{ offer.offername }}</div>
+            <div class="offerelement">{{ offer.manager }}</div>
+            <div class="offerelement">{{ offer.status }}</div>
+            <div class="offerelement">{{ offer.total }} Руб.</div>
+        </div>
+    </div>
 </div>
 </template>
 
 <style scoped>
+.ofheader{
+    text-align: center;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+.offerelement{
+    border: 1px solid black;
+    padding: 5px;
+    width: 200px;
+}
 .square{
     width: 50px;
     height: 50px;
