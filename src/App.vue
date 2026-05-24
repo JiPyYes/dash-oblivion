@@ -41,6 +41,8 @@ const filtering = reactive({
     <option value="Отдел 3">Отдел 3</option>
 </select>
 <button @click="udata.filterby(filtering.period, filtering.man_dep)">Применить фильтр</button>
+<button @click="udata.toPDF">Экспорт в PDF</button>
+<button @click="udata.toXLSX">Экспорт в XLSX</button>
 <RouterView></RouterView>
 <button @click="logout" v-if="users.currentAccount.value != ''">logout</button>
 </template>
