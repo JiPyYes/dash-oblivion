@@ -1,4 +1,10 @@
 import { reactive, ref, computed } from "vue"
+import ExcelJS from 'exceljs'
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
+import html2pdf from 'html2pdf.js';
+
+const chartinstance = ref(null)
 
 const departments = ref([
     {
@@ -245,6 +251,66 @@ const offers = ref([{
 
 filterby('quarter', '')
 
+const toPDF = () => {
+    const element = document.getElementById('report-container');
+
+    const options = {
+        margin: 5,
+        filename: 'report.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+            scale: 2, 
+            useCORS: true,
+            windowWidth: element.scrollWidth,
+            width:950
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(element).save();
+};
+
+const toXLSX = async() => {
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet('Отчет по продажам');
+
+    sheet.columns = [
+        { header: 'Номер сделки', key: 'offerid', width: 15 },
+        { header: 'Дата', key: 'date', width: 15 },
+        { header: 'Название сделки', key: 'offername', width: 20 },
+        { header: 'Менеджер', key: 'manager', width: 15 },
+        { header: 'Статус', key: 'status', width: 15 },
+        { header: 'Прибыль', key: 'total', width: 15 }
+    ];
+
+    for (let index = 0; index < offers.value.length; index++) {
+        const element = offers.value[index];
+        sheet.addRow(element);
+    }
+
+    const chart = chartinstance.value.chart
+    const { imgURI } = await chart.dataURI()
+
+    const imageId = workbook.addImage({
+        base64: imgURI, 
+        extension: 'png',
+    });
+
+    sheet.addImage(imageId, {
+        tl: { col: 0, row: offers.value.length + 2 }, 
+        ext: { width: 1458, height: 318 }
+    });
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = 'report.xlsx';
+    anchor.click();
+}
+
 export default function useData(){
-    return{totalCompanyMetrics,diagramm_distribution, diagramm_style, color_bank, offers,filterby}
+    return{totalCompanyMetrics,diagramm_distribution, diagramm_style, color_bank, offers,filterby, toPDF, toXLSX, chartinstance}
 }

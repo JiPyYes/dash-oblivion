@@ -1,7 +1,7 @@
 <script setup>
 import VueApexCharts from 'vue3-apexcharts';
 import useData from '../composables/useData';
-import { reactive, ref } from 'vue';
+import { reactive, ref,onMounted } from 'vue';
 import { computed } from 'vue';
 const udata = useData()
 const series = ref([
@@ -16,6 +16,13 @@ const chartOptions = ref({
   colors: ['#2E93fA', '#FF4560', '#00E396'],
   xaxis: { categories: ['1 неделя', '2 неделя', '3 неделя', '4 неделя'] },
 })
+
+const mychartinstance = ref(null)
+
+onMounted(() => {
+    udata.chartinstance.value = mychartinstance.value 
+});
+
 
 function ばか(дата){
     switch (дата) {
@@ -117,37 +124,40 @@ const filteredDeals = computed(() => {
             </div>
         </div>
     </div>
-    <div>
-        <VueApexCharts type="line" :options="chartOptions" :series="series" height="350"></VueApexCharts>
-        <button @click="ばか('month')">Месяц</button>
-        <button @click="ばか('квартал')">Квартал</button>
-        <button @click="ばか('年')">Год</button>
-    </div>
-    <div class="table">
-        <input type="text" v-model="filters.manager">
-        <select v-model="filters.status">
-            <option value="">Статус</option>
-            <option value="В процессе">В процессе</option>
-            <option value="Завершена">Завершена</option>
-            <option value="Отклонена">Отклонена</option>
-        </select>
-        <div class="row">
-            <div class="offerelement ofheader">Номер сделки</div>
-            <div class="offerelement ofheader">Дата сделки</div>
-            <div class="offerelement ofheader">Имя сделки</div>
-            <div class="offerelement ofheader">Имя менеджера</div>
-            <div class="offerelement ofheader">Статус сделки</div>
-            <div class="offerelement ofheader">Прибыль со сделки</div>
+    <button @click="ばか('month')">Месяц</button>
+    <button @click="ばか('квартал')">Квартал</button>
+    <button @click="ばか('年')">Год</button>
+    <div id="report-container">
+        <div>
+            <VueApexCharts ref='mychartinstance' type="line" :options="chartOptions" :series="series" height="350" width="50%" ></VueApexCharts>
+            
         </div>
-        <div class="row" v-for="offer in filteredDeals">
-            <div class="offerelement">{{ offer.offerid }}</div>
-            <div class="offerelement">{{ offer.date }}</div>
-            <div class="offerelement">{{ offer.offername }}</div>
-            <div class="offerelement">{{ offer.manager }}</div>
-            <div class="offerelement">{{ offer.status }}</div>
-            <div class="offerelement">{{ offer.total }} Руб.</div>
+        <div class="table" id="report-container">
+            <div class="row">
+                <div class="offerelement ofheader">Номер сделки</div>
+                <div class="offerelement ofheader">Дата сделки</div>
+                <div class="offerelement ofheader">Имя сделки</div>
+                <div class="offerelement ofheader">Имя менеджера</div>
+                <div class="offerelement ofheader">Статус сделки</div>
+                <div class="offerelement ofheader">Прибыль со сделки</div>
+            </div>
+            <div class="row" v-for="offer in filteredDeals">
+                <div class="offerelement">{{ offer.offerid }}</div>
+                <div class="offerelement">{{ offer.date }}</div>
+                <div class="offerelement">{{ offer.offername }}</div>
+                <div class="offerelement">{{ offer.manager }}</div>
+                <div class="offerelement">{{ offer.status }}</div>
+                <div class="offerelement">{{ offer.total }} Руб.</div>
+            </div>
         </div>
     </div>
+    <input type="text" v-model="filters.manager">
+    <select v-model="filters.status">
+        <option value="">Статус</option>
+        <option value="В процессе">В процессе</option>
+        <option value="Завершена">Завершена</option>
+        <option value="Отклонена">Отклонена</option>
+    </select>
 </div>
 </template>
 
