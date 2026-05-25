@@ -32,7 +32,7 @@ function logincheck(){
 </script>
 
 <template>
-    <div>
+    <div class="main">
         Вход в аккаунт:
         <input type="text" v-model="dataget.username" placeholder="Введите имя">
         <input type="text" v-model="dataget.password" placeholder="Введите пароль">
@@ -42,5 +42,7 @@ function logincheck(){
 </template>
 
 <style scoped>
-
+.main{
+    max-height: 500px;
+}
 </style>
