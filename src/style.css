@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'JetBrains_Mono';
+    src: url(/fonts/JetBrains_Mono/JetBrainsMono-VariableFont_wght.ttf)
+}
+
+@font-face {
+    font-family: 'Jura';
+    src: url(/fonts/Jura/Jura-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: 'Jura_Bold';
+    src: url(/fonts/Jura/static/Jura-Bold.ttf);
+}
+
+:root {
+    --black: #070707;
+    color: aliceblue;
+}
+
+body {
+    background-color: var(--black);
+}

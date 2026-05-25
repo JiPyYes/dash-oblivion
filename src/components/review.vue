@@ -81,87 +81,291 @@ const filteredDeals = computed(() => {
 </script>
 
 <template>
-<div class="main_metrics">
-    <div class="revenue">
-        Выручка
-        {{ udata.totalCompanyMetrics.value.revenue }}
-        руб.
-    </div>
-    <div class="earnings">
-        Прибыль
-        {{ udata.totalCompanyMetrics.value.earnings }}
-        руб.
-    </div>
-    <div class="clients">
-        Клиенты
-        {{ udata.totalCompanyMetrics.value.clients }}
-        чел.
-    </div>
-    <div class="conversion">
-        Конверсия
-        {{ udata.totalCompanyMetrics.value.conversion }}
-        чел.
-    </div>
-
-    <div class="diagramm">
-        Распределение выручки по направлениям бизнеса
-        <div :style="udata.diagramm_style"></div>
-        <div :style="{'--c1':udata.color_bank.color1,
-            '--c2':udata.color_bank.color2,
-            '--c3':udata.color_bank.color3
-        }">
-            <div>
-                <div class="square color1"></div>
-                {{ udata.diagramm_distribution.wholesale }}% опт
-            </div>
-            <div>
-                <div class="square color2"></div>
-                {{ udata.diagramm_distribution.retail }}% розница
-            </div>
-            <div>
-                <div class="square color3"></div>
-                {{ udata.diagramm_distribution.service }}% услуги
-            </div>
+<div class="review">
+    <div class="main_metrics">
+        <div class="revenue">
+            <p>Выручка</p>
+            {{ udata.totalCompanyMetrics.value.revenue }}
+            <p>рублей</p>
+        </div>
+        <div class="earnings">
+            <p>Прибыль</p>
+            {{ udata.totalCompanyMetrics.value.earnings }}
+            <p>рублей</p>
+        </div>
+        <div class="clients">
+            <p>Клиенты</p>
+            {{ udata.totalCompanyMetrics.value.clients }}
+            <p>человек</p>
+        </div>
+        <div class="conversion">
+            <p>Конверсия</p>
+            {{ udata.totalCompanyMetrics.value.conversion }}
+            <p>человек</p>
         </div>
     </div>
-    <button @click="ばか('month')">Месяц</button>
-    <button @click="ばか('квартал')">Квартал</button>
-    <button @click="ばか('年')">Год</button>
-    <div id="report-container">
+        <div class="yes">
+            <div class="diagramm">
+                <div class="circlePoz">
+                    <div :style="udata.diagramm_style"></div>
+                    <div :style="{'--c1':udata.color_bank.color1,
+                        '--c2':udata.color_bank.color2,
+                        '--c3':udata.color_bank.color3
+                    }">
+                </div>
+                <div class="diadgrammR">
+                    <p>Распределение выручки по направлениям бизнеса</p>
+                        <div class="squareAlign">
+                            <div class="square color1"></div>
+                            {{ udata.diagramm_distribution.wholesale }}% опт
+                        </div>
+                        <div class="squareAlign">
+                            <div class="square color2"></div>
+                            {{ udata.diagramm_distribution.retail }}% розница
+                        </div>
+                        <div class="squareAlign">
+                            <div class="square color3"></div>
+                            {{ udata.diagramm_distribution.service }}% услуги
+                        </div>
+                </div>    
+            </div>
+        </div>  
         <div>
-            <VueApexCharts ref='mychartinstance' type="line" :options="chartOptions" :series="series" height="350" width="50%" ></VueApexCharts>
-            
-        </div>
-        <div class="table" id="report-container">
-            <div class="row">
-                <div class="offerelement ofheader">Номер сделки</div>
-                <div class="offerelement ofheader">Дата сделки</div>
-                <div class="offerelement ofheader">Имя сделки</div>
-                <div class="offerelement ofheader">Имя менеджера</div>
-                <div class="offerelement ofheader">Статус сделки</div>
-                <div class="offerelement ofheader">Прибыль со сделки</div>
+            <div class="graphs">
+                <VueApexCharts ref='mychartinstance' type="line" :options="chartOptions" :series="series" height="300" width="100%" ></VueApexCharts>
+                 <div class="btns">
+                    <button @click="ばか('month')">Месяц</button>
+                    <button @click="ばか('квартал')">Квартал</button>
+                    <button @click="ばか('年')">Год</button>                    
+                 </div>   
             </div>
-            <div class="row" v-for="offer in filteredDeals">
-                <div class="offerelement">{{ offer.offerid }}</div>
-                <div class="offerelement">{{ offer.date }}</div>
-                <div class="offerelement">{{ offer.offername }}</div>
-                <div class="offerelement">{{ offer.manager }}</div>
-                <div class="offerelement">{{ offer.status }}</div>
-                <div class="offerelement">{{ offer.total }} Руб.</div>
-            </div>
-        </div>
+         
+        </div>    
     </div>
-    <input type="text" v-model="filters.manager">
-    <select v-model="filters.status">
-        <option value="">Статус</option>
-        <option value="В процессе">В процессе</option>
-        <option value="Завершена">Завершена</option>
-        <option value="Отклонена">Отклонена</option>
-    </select>
+        <div class="tables">
+            <div id="report-container">
+                <div class="table" id="report-container">
+                    <div class="row">
+                        <div class="offerelement ofheader">Номер сделки</div>
+                        <div class="offerelement ofheader">Дата сделки</div>
+                        <div class="offerelement ofheader">Имя сделки</div>
+                        <div class="offerelement ofheader">Имя менеджера</div>
+                        <div class="offerelement ofheader">Статус сделки</div>
+                        <div class="offerelement ofheader">Прибыль со сделки</div>
+                    </div>
+                    <div class="row" v-for="offer in filteredDeals">
+                        <div class="offerelement">{{ offer.offerid }}</div>
+                        <div class="offerelement">{{ offer.date }}</div>
+                        <div class="offerelement">{{ offer.offername }}</div>
+                        <div class="offerelement">{{ offer.manager }}</div>
+                        <div class="offerelement">{{ offer.status }}</div>
+                        <div class="offerelement">{{ offer.total }} Руб.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="reportBtns">
+                    <input type="text" v-model="filters.manager">
+                <select v-model="filters.status">
+                    <option value="">Статус</option>
+                    <option value="В процессе">В процессе</option>
+                    <option value="Завершена">Завершена</option>
+                    <option value="Отклонена">Отклонена</option>
+                </select>
+            </div>
+        </div>
 </div>
 </template>
 
 <style scoped>
+.table{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    min-width: 1200px;
+    min-height: 120px;
+}
+.circlePoz{
+    display: flex;
+    min-width: 250px;
+    min-height: 335px;
+    align-items: center;
+}
+.reportBtns{
+    margin-top: 20px;
+    display: flex;
+    padding-left: 70px;
+    gap: 25px;
+    min-height: 50px;
+    min-width: 280px;
+}
+.tables{
+    margin-top: 20px;
+    max-width: 1400px;
+    display: flex;
+    align-self: center;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: solid 2px black;
+    flex-direction: column;
+}
+.btns{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+button{
+    font-size: 15px;
+    font-family: 'JetBrains_Mono';
+    color: black;
+    font-weight: 700;
+    min-width: 150px;
+    border-radius: 10px;
+    min-height: 45px;
+    background-color: aliceblue;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: 0.7s;
+}
+button:hover{
+    color: aliceblue;
+    background-color: black;
+}
+input{
+    font-size: 15px;
+    font-family: 'JetBrains_Mono';
+    border-radius: 7px;
+    background-color: aliceblue;
+    color: black;
+    max-width: 150px;
+    max-height: 40px;
+}
+select{
+    font-size: 15px;
+    font-family: 'JetBrains_Mono';
+    border-radius: 7px;
+    background-color: aliceblue;
+    color: black;
+    max-width: 150px;
+    max-height: 45px;
+}
+.yes{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    height: 400px;
+}
+.graphs{
+    border: solid 2px black;
+    border-radius: 10px;
+    margin-top: 10px;
+    min-height: 340px;
+    min-width: 690px;
+}
+.squareAlign{
+    display: flex;
+    font-size: 18px;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    width: 233px;
+    margin: 5px;
+}
+.diadgrammR{
+    font-size: 17px;
+    font-weight: 600;
+    min-height: 300px;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.diagramm{
+    display: flex;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: solid 2px black;
+    max-height: 340px;
+    max-width: 700px;
+    flex-direction: row;    
+}
+.review{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    color: black;
+    font-family: 'JetBrains_Mono';
+    padding: 7px;
+    border: solid 2px black;
+    border-radius: 15px;
+    height: 870px;
+    background-color: aliceblue;
+}
+.revenue{
+    align-items: center;
+    justify-content: space-around;
+    font-size: 22px;
+    font-weight: 600;
+    font-family: 'JetBrains_Mono';
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(88, 52, 122);
+    min-height: 210px;
+    min-width: 270px;    
+}
+.earnings{
+    font-family: 'JetBrains_Mono';
+    font-size: 22px;
+    display: flex;
+    font-weight: 600;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
+    flex-direction: column;
+    background-color: rgb(48, 83, 80);
+    min-height: 210px;
+    min-width: 270px;    
+}
+.clients{
+    font-family: 'JetBrains_Mono';
+    font-size: 22px;
+    font-weight: 600;
+    display: flex;
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;    
+    background-color: rgb(88, 64, 31);
+    min-height: 210px;
+    min-width: 270px;    
+}
+.conversion{
+    font-family: 'JetBrains_Mono';
+    font-size: 22px;
+    display: flex;
+    font-weight: 600;
+    border-radius: 10px;
+    justify-content: space-around;
+    align-items: center;    
+    flex-direction: column;
+    background-color: rgb(65, 128, 70);
+    min-height: 210px;
+    min-width: 270px;    
+}
+.main_metrics{
+    background-color: aliceblue;
+    min-height: 210px;
+    min-width: 1350px;
+    display: flex;
+    padding: 15px;
+    border-radius: 10px;
+    border: solid 2px black;
+    justify-content: space-between;
+    flex-direction: row;
+}
 .ofheader{
     text-align: center;
 }
