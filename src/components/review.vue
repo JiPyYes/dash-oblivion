@@ -1,7 +1,7 @@
 <script setup>
 import VueApexCharts from 'vue3-apexcharts';
 import useData from '../composables/useData';
-import { reactive, ref,onMounted } from 'vue';
+import { reactive, ref,onMounted, watch } from 'vue';
 import { computed } from 'vue';
 const udata = useData()
 const series = ref([
@@ -22,7 +22,6 @@ const mychartinstance = ref(null)
 onMounted(() => {
     udata.chartinstance.value = mychartinstance.value 
 });
-
 
 function ばか(дата){
     switch (дата) {
@@ -72,8 +71,8 @@ const filters = reactive({
 
 const filteredDeals = computed(() => {
     return udata.offers.value.filter(item => {
-        const matchManager = filters.manager ? item.manager.toLowerCase().includes(filters.manager.toLowerCase()) : true
-        const matchStatus = filters.status ? item.status === filters.status : true
+        const matchManager = filters.manager ? item.manager?.toLowerCase().includes(filters.manager.toLowerCase()) : true
+        const matchStatus = filters.status ? item?.status === filters.status : true
 
         return matchManager && matchStatus 
     })
@@ -85,22 +84,22 @@ const filteredDeals = computed(() => {
     <div class="main_metrics">
         <div class="revenue">
             <p>Выручка</p>
-            {{ udata.totalCompanyMetrics.value.revenue }}
+            {{ udata.formatNumbers(udata.totalCompanyMetrics?.value?.revenue) }}
             <p>рублей</p>
         </div>
         <div class="earnings">
             <p>Прибыль</p>
-            {{ udata.totalCompanyMetrics.value.earnings }}
+            {{ udata.formatNumbers(udata.totalCompanyMetrics?.value?.earnings) }}
             <p>рублей</p>
         </div>
         <div class="clients">
             <p>Клиенты</p>
-            {{ udata.totalCompanyMetrics.value.clients }}
+            {{ udata.formatNumbers(udata.totalCompanyMetrics?.value?.clients) }}
             <p>человек</p>
         </div>
         <div class="conversion">
             <p>Конверсия</p>
-            {{ udata.totalCompanyMetrics.value.conversion }}
+            {{ udata.formatNumbers(udata.totalCompanyMetrics?.value?.conversion) }}
             <p>человек</p>
         </div>
     </div>
@@ -108,12 +107,10 @@ const filteredDeals = computed(() => {
             <div class="diagramm">
                 <div class="circlePoz">
                     <div :style="udata.diagramm_style"></div>
-                    <div :style="{'--c1':udata.color_bank.color1,
+                <div class="diadgrammR" :style="{'--c1':udata.color_bank.color1,
                         '--c2':udata.color_bank.color2,
                         '--c3':udata.color_bank.color3
                     }">
-                </div>
-                <div class="diadgrammR">
                     <p>Распределение выручки по направлениям бизнеса</p>
                         <div class="squareAlign">
                             <div class="square color1"></div>
@@ -131,8 +128,8 @@ const filteredDeals = computed(() => {
             </div>
         </div>  
         <div>
-            <div class="graphs">
-                <VueApexCharts ref='mychartinstance' type="line" :options="chartOptions" :series="series" height="300" width="100%" ></VueApexCharts>
+            <div class="graphs" id="report-container-2">
+                <VueApexCharts ref='mychartinstance' type="line" :options="chartOptions" :series="series" height="300" width="100%"></VueApexCharts>
                  <div class="btns">
                     <button @click="ばか('month')">Месяц</button>
                     <button @click="ばか('квартал')">Квартал</button>
@@ -143,8 +140,8 @@ const filteredDeals = computed(() => {
         </div>    
     </div>
         <div class="tables">
-            <div id="report-container">
-                <div class="table" id="report-container">
+            <div id="report-container-1">
+                <div class="table">
                     <div class="row">
                         <div class="offerelement ofheader">Номер сделки</div>
                         <div class="offerelement ofheader">Дата сделки</div>
@@ -312,7 +309,7 @@ select{
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    background-color: rgb(88, 52, 122);
+
     min-height: 210px;
     min-width: 270px;    
 }
@@ -325,7 +322,7 @@ select{
     align-items: center;
     border-radius: 10px;
     flex-direction: column;
-    background-color: rgb(48, 83, 80);
+
     min-height: 210px;
     min-width: 270px;    
 }
@@ -338,7 +335,7 @@ select{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;    
-    background-color: rgb(88, 64, 31);
+
     min-height: 210px;
     min-width: 270px;    
 }
@@ -351,7 +348,7 @@ select{
     justify-content: space-around;
     align-items: center;    
     flex-direction: column;
-    background-color: rgb(65, 128, 70);
+
     min-height: 210px;
     min-width: 270px;    
 }
