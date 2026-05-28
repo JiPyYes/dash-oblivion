@@ -3,6 +3,7 @@ import VueApexCharts from 'vue3-apexcharts';
 import useData from '../composables/useData';
 import { reactive, ref,onMounted } from 'vue';
 import { computed } from 'vue';
+import { watch } from 'vue';
 const udata = useData()
 const series = ref([
   { name: 'Выручка', data: [30, 40, 35, 50] },
@@ -19,9 +20,143 @@ const chartOptions = ref({
 
 const mychartinstance = ref(null)
 
-onMounted(() => {
-    udata.chartinstance.value = mychartinstance.value 
-});
+const MetricsWarningColors = reactive({
+    revenue: {backgroundColor : 'red'},
+    earnings: {backgroundColor: 'red'},
+    clients: {backgroundColor: 'red'},
+    conversion: {backgroundColor: 'red'} 
+})
+
+function MetricsWarning(period){
+    if (period === 'quarter'){
+        if(udata.totalCompanyMetrics.value.revenue >= 100){
+            MetricsWarningColors.revenue.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.revenue >= 50) {
+            MetricsWarningColors.revenue.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.revenue.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.revenue >= 100){
+            MetricsWarningColors.revenue.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.revenue >= 50) {
+            MetricsWarningColors.revenue.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.revenue.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.revenue >= 100){
+            MetricsWarningColors.revenue.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.revenue >= 50) {
+            MetricsWarningColors.revenue.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.revenue.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.revenue >= 100){
+            MetricsWarningColors.revenue.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.revenue >= 50) {
+            MetricsWarningColors.revenue.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.revenue.backgroundColor = 'red'
+        }
+   }
+   if (period === 'month'){
+        if(udata.totalCompanyMetrics.value.earnings >= 100){
+            MetricsWarningColors.earnings.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.earnings >= 50) {
+            MetricsWarningColors.earnings.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.earnings.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.earnings >= 100){
+            MetricsWarningColors.earnings.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.earnings >= 50) {
+            MetricsWarningColors.earnings.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.earnings.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.earnings >= 100){
+            MetricsWarningColors.earnings.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.earnings >= 50) {
+            MetricsWarningColors.earnings.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.earnings.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.earnings >= 100){
+            MetricsWarningColors.earnings.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.earnings >= 50) {
+            MetricsWarningColors.earnings.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.earnings.backgroundColor = 'red'
+        }
+   }
+   if (period === 'week'){
+        if(udata.totalCompanyMetrics.value.clients >= 100){
+            MetricsWarningColors.clients.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.clients >= 50) {
+            MetricsWarningColors.clients.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.clients.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.clients >= 100){
+            MetricsWarningColors.clients.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.clients >= 50) {
+            MetricsWarningColors.clients.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.clients.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.clients >= 100){
+            MetricsWarningColors.clients.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.clients >= 50) {
+            MetricsWarningColors.clients.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.clients.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.clients >= 100){
+            MetricsWarningColors.clients.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.clients >= 50) {
+            MetricsWarningColors.clients.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.clients.backgroundColor = 'red'
+        }
+   }
+   if (period === 'day'){
+        if(udata.totalCompanyMetrics.value.conversion >= 100){
+            MetricsWarningColors.conversion.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.conversion >= 50) {
+            MetricsWarningColors.conversion.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.conversion.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.conversion >= 100){
+            MetricsWarningColors.conversion.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.conversion >= 50) {
+            MetricsWarningColors.conversion.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.conversion.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.conversion >= 100){
+            MetricsWarningColors.conversion.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.conversion >= 50) {
+            MetricsWarningColors.conversion.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.conversion.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.conversion >= 100){
+            MetricsWarningColors.conversion.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.conversion >= 50) {
+            MetricsWarningColors.conversion.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.conversion.backgroundColor = 'red'
+        }
+   }
+}
+
+watch(udata.totalCompanyMetrics, (newValue)=>{
+    if(newValue){
+        MetricsWarning(udata.filtering.period)
+    }
+})
+
+MetricsWarning('quarter')
 
 
 function ばか(дата){
@@ -83,22 +218,22 @@ const filteredDeals = computed(() => {
 <template>
 <div class="review">
     <div class="main_metrics">
-        <div class="revenue">
+        <div class="revenue" :style="MetricsWarningColors.revenue">
             <p>Выручка</p>
             {{ udata.totalCompanyMetrics.value.revenue }}
             <p>рублей</p>
         </div>
-        <div class="earnings">
+        <div class="earnings" :style="MetricsWarningColors.earnings">
             <p>Прибыль</p>
             {{ udata.totalCompanyMetrics.value.earnings }}
             <p>рублей</p>
         </div>
-        <div class="clients">
+        <div class="clients" :style="MetricsWarningColors.clients">
             <p>Клиенты</p>
             {{ udata.totalCompanyMetrics.value.clients }}
             <p>человек</p>
         </div>
-        <div class="conversion">
+        <div class="conversion" :style  ="MetricsWarningColors.conversion">
             <p>Конверсия</p>
             {{ udata.totalCompanyMetrics.value.conversion }}
             <p>человек</p>
@@ -112,8 +247,7 @@ const filteredDeals = computed(() => {
                         '--c2':udata.color_bank.color2,
                         '--c3':udata.color_bank.color3
                     }">
-                </div>
-                <div class="diadgrammR">
+                    <div class="diadgrammR">
                     <p>Распределение выручки по направлениям бизнеса</p>
                         <div class="squareAlign">
                             <div class="square color1"></div>
@@ -126,7 +260,8 @@ const filteredDeals = computed(() => {
                         <div class="squareAlign">
                             <div class="square color3"></div>
                             {{ udata.diagramm_distribution.service }}% услуги
-                        </div>
+                    </div>
+                </div>
                 </div>    
             </div>
         </div>  
@@ -312,7 +447,6 @@ select{
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    background-color: rgb(88, 52, 122);
     min-height: 210px;
     min-width: 270px;    
 }
@@ -325,7 +459,6 @@ select{
     align-items: center;
     border-radius: 10px;
     flex-direction: column;
-    background-color: rgb(48, 83, 80);
     min-height: 210px;
     min-width: 270px;    
 }
@@ -338,7 +471,6 @@ select{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;    
-    background-color: rgb(88, 64, 31);
     min-height: 210px;
     min-width: 270px;    
 }
@@ -351,7 +483,6 @@ select{
     justify-content: space-around;
     align-items: center;    
     flex-direction: column;
-    background-color: rgb(65, 128, 70);
     min-height: 210px;
     min-width: 270px;    
 }

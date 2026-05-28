@@ -310,7 +310,10 @@ const toXLSX = async() => {
     anchor.download = 'report.xlsx';
     anchor.click();
 }
-
+const filtering = reactive ({
+    period:'quarter',
+    man_dep:''
+})
 export default function useData(){
-    return{totalCompanyMetrics,diagramm_distribution, diagramm_style, color_bank, offers,filterby, toPDF, toXLSX, chartinstance}
+    return{totalCompanyMetrics,diagramm_distribution, diagramm_style, color_bank, offers,filterby, toPDF, toXLSX, chartinstance, filtering}
 }
