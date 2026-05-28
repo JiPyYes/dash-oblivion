@@ -11,10 +11,7 @@ function logout(){
     }
     router.push({name: 'login'});
 }
-const filtering = reactive({
-    period:'',
-    man_dep:''
-})
+
 </script>
 
 <template>
@@ -51,14 +48,13 @@ const filtering = reactive({
 </div>
 <div class="parentFilter">
     <div class="Filter"> 
-        <select v-model="filtering.period">
-            <option value="">Выбрать период</option>
+        <select v-model="udata.filtering.period">
             <option value="quarter">Квартал</option>
             <option value="month">Месяц</option>
             <option value="week">Неделя</option>
             <option value="day">День</option>
         </select>
-        <select v-model="filtering.man_dep">
+        <select v-model="udata.filtering.man_dep">
             <option value="">Выбрать менеджера</option>
             <option value="Менеджер 1">Менеджер 1</option>
             <option value="Менеджер 2">Менеджер 2</option>
@@ -69,7 +65,7 @@ const filtering = reactive({
         </select>
     </div>
         <div class="FiltApply">
-            <button @click="udata.filterby(filtering.period, filtering.man_dep)">Применить фильтр</button>
+            <button @click="udata.filterby(udata.filtering.period, udata.filtering.man_dep)">Применить фильтр</button>
         </div>
 </div> 
     <div class="exports">
