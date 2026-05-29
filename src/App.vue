@@ -11,7 +11,6 @@ function logout(){
     }
     router.push({name: 'login'});
 }
-
 </script>
 
 <template>
