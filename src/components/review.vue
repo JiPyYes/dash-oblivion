@@ -35,35 +35,35 @@ function MetricsWarning(period){
         } else {
             MetricsWarningColors.revenue.backgroundColor = 'red'
         }
-        if(udata.totalCompanyMetrics.value.revenue >= 100){
-            MetricsWarningColors.revenue.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.revenue >= 50) {
-            MetricsWarningColors.revenue.backgroundColor = 'yellow'
+        if(udata.totalCompanyMetrics.value.earnings >= 100){
+            MetricsWarningColors.earnings.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.earnings >= 50) {
+            MetricsWarningColors.earnings.backgroundColor = 'yellow'
         } else {
-            MetricsWarningColors.revenue.backgroundColor = 'red'
+            MetricsWarningColors.earnings.backgroundColor = 'red'
         }
-        if(udata.totalCompanyMetrics.value.revenue >= 100){
-            MetricsWarningColors.revenue.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.revenue >= 50) {
-            MetricsWarningColors.revenue.backgroundColor = 'yellow'
+        if(udata.totalCompanyMetrics.value.clients >= 100){
+            MetricsWarningColors.clients.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.clients >= 50) {
+            MetricsWarningColors.clients.backgroundColor = 'yellow'
         } else {
-            MetricsWarningColors.revenue.backgroundColor = 'red'
+            MetricsWarningColors.clients.backgroundColor = 'red'
         }
-        if(udata.totalCompanyMetrics.value.revenue >= 100){
-            MetricsWarningColors.revenue.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.revenue >= 50) {
-            MetricsWarningColors.revenue.backgroundColor = 'yellow'
+        if(udata.totalCompanyMetrics.value.conversion >= 100){
+            MetricsWarningColors.conversion.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.conversion >= 50) {
+            MetricsWarningColors.conversion.backgroundColor = 'yellow'
         } else {
-            MetricsWarningColors.revenue.backgroundColor = 'red'
+            MetricsWarningColors.conversion.backgroundColor = 'red'
         }
    }
    if (period === 'month'){
-        if(udata.totalCompanyMetrics.value.earnings >= 100){
-            MetricsWarningColors.earnings.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.earnings >= 50) {
-            MetricsWarningColors.earnings.backgroundColor = 'yellow'
+        if(udata.totalCompanyMetrics.value.revenue >= 100){
+            MetricsWarningColors.revenue.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.revenue >= 50) {
+            MetricsWarningColors.revenue.backgroundColor = 'yellow'
         } else {
-            MetricsWarningColors.earnings.backgroundColor = 'red'
+            MetricsWarningColors.revenue.backgroundColor = 'red'
         }
         if(udata.totalCompanyMetrics.value.earnings >= 100){
             MetricsWarningColors.earnings.backgroundColor = 'green'
@@ -72,28 +72,35 @@ function MetricsWarning(period){
         } else {
             MetricsWarningColors.earnings.backgroundColor = 'red'
         }
-        if(udata.totalCompanyMetrics.value.earnings >= 100){
-            MetricsWarningColors.earnings.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.earnings >= 50) {
-            MetricsWarningColors.earnings.backgroundColor = 'yellow'
+        if(udata.totalCompanyMetrics.value.clients >= 100){
+            MetricsWarningColors.clients.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.clients >= 50) {
+            MetricsWarningColors.clients.backgroundColor = 'yellow'
         } else {
-            MetricsWarningColors.earnings.backgroundColor = 'red'
+            MetricsWarningColors.clients.backgroundColor = 'red'
         }
-        if(udata.totalCompanyMetrics.value.earnings >= 100){
-            MetricsWarningColors.earnings.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.earnings >= 50) {
-            MetricsWarningColors.earnings.backgroundColor = 'yellow'
+        if(udata.totalCompanyMetrics.value.conversion >= 100){
+            MetricsWarningColors.conversion.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.conversion >= 50) {
+            MetricsWarningColors.conversion.backgroundColor = 'yellow'
         } else {
-            MetricsWarningColors.earnings.backgroundColor = 'red'
+            MetricsWarningColors.conversion.backgroundColor = 'red'
         }
    }
    if (period === 'week'){
-        if(udata.totalCompanyMetrics.value.clients >= 100){
-            MetricsWarningColors.clients.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.clients >= 50) {
-            MetricsWarningColors.clients.backgroundColor = 'yellow'
+        if(udata.totalCompanyMetrics.value.revenue >= 100){
+            MetricsWarningColors.revenue.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.revenue >= 50) {
+            MetricsWarningColors.revenue.backgroundColor = 'yellow'
         } else {
-            MetricsWarningColors.clients.backgroundColor = 'red'
+            MetricsWarningColors.revenue.backgroundColor = 'red'
+        }
+        if(udata.totalCompanyMetrics.value.earnings >= 100){
+            MetricsWarningColors.earnings.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.earnings >= 50) {
+            MetricsWarningColors.earnings.backgroundColor = 'yellow'
+        } else {
+            MetricsWarningColors.earnings.backgroundColor = 'red'
         }
         if(udata.totalCompanyMetrics.value.clients >= 100){
             MetricsWarningColors.clients.backgroundColor = 'green'
@@ -102,42 +109,35 @@ function MetricsWarning(period){
         } else {
             MetricsWarningColors.clients.backgroundColor = 'red'
         }
-        if(udata.totalCompanyMetrics.value.clients >= 100){
-            MetricsWarningColors.clients.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.clients >= 50) {
-            MetricsWarningColors.clients.backgroundColor = 'yellow'
+        if(udata.totalCompanyMetrics.value.conversion >= 100){
+            MetricsWarningColors.conversion.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.conversion >= 50) {
+            MetricsWarningColors.conversion.backgroundColor = 'yellow'
         } else {
-            MetricsWarningColors.clients.backgroundColor = 'red'
-        }
-        if(udata.totalCompanyMetrics.value.clients >= 100){
-            MetricsWarningColors.clients.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.clients >= 50) {
-            MetricsWarningColors.clients.backgroundColor = 'yellow'
-        } else {
-            MetricsWarningColors.clients.backgroundColor = 'red'
+            MetricsWarningColors.conversion.backgroundColor = 'red'
         }
    }
    if (period === 'day'){
-        if(udata.totalCompanyMetrics.value.conversion >= 100){
-            MetricsWarningColors.conversion.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.conversion >= 50) {
-            MetricsWarningColors.conversion.backgroundColor = 'yellow'
+        if(udata.totalCompanyMetrics.value.revenue >= 100){
+            MetricsWarningColors.revenue.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.revenue >= 50) {
+            MetricsWarningColors.revenue.backgroundColor = 'yellow'
         } else {
-            MetricsWarningColors.conversion.backgroundColor = 'red'
+            MetricsWarningColors.revenue.backgroundColor = 'red'
         }
-        if(udata.totalCompanyMetrics.value.conversion >= 100){
-            MetricsWarningColors.conversion.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.conversion >= 50) {
-            MetricsWarningColors.conversion.backgroundColor = 'yellow'
+        if(udata.totalCompanyMetrics.value.earnings >= 100){
+            MetricsWarningColors.earnings.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.earnings >= 50) {
+            MetricsWarningColors.earnings.backgroundColor = 'yellow'
         } else {
-            MetricsWarningColors.conversion.backgroundColor = 'red'
+            MetricsWarningColors.earnings.backgroundColor = 'red'
         }
-        if(udata.totalCompanyMetrics.value.conversion >= 100){
-            MetricsWarningColors.conversion.backgroundColor = 'green'
-        } else if (udata.totalCompanyMetrics.value.conversion >= 50) {
-            MetricsWarningColors.conversion.backgroundColor = 'yellow'
+        if(udata.totalCompanyMetrics.value.clients >= 100){
+            MetricsWarningColors.clients.backgroundColor = 'green'
+        } else if (udata.totalCompanyMetrics.value.clients >= 50) {
+            MetricsWarningColors.clients.backgroundColor = 'yellow'
         } else {
-            MetricsWarningColors.conversion.backgroundColor = 'red'
+            MetricsWarningColors.clients.backgroundColor = 'red'
         }
         if(udata.totalCompanyMetrics.value.conversion >= 100){
             MetricsWarningColors.conversion.backgroundColor = 'green'
@@ -240,29 +240,29 @@ const filteredDeals = computed(() => {
         <div class="yes">
             <div class="diagramm">
                 <div class="circlePoz">
-                    <div :style="udata.diagramm_style"></div>
-                <div class="diadgrammR" :style="{'--c1':udata.color_bank.color1,
-                        '--c2':udata.color_bank.color2,
-                        '--c3':udata.color_bank.color3
+                    <div :style="udata.diagram.style"></div>
+                <div class="diadgrammR" :style="{'--c1':udata.diagram.colors.wholesale,
+                        '--c2':udata.diagram.colors.retail,
+                        '--c3':udata.diagram.colors.service
                     }">
                     <div class="diadgrammR">
                     <p>Распределение выручки по направлениям бизнеса</p>
                         <div class="squareAlign">
                             <div class="square color1"></div>
-                            {{ udata.diagramm_distribution.wholesale }}% опт
+                            {{ udata.diagram.data.wholesale }}% опт
                         </div>
                         <div class="squareAlign">
                             <div class="square color2"></div>
-                            {{ udata.diagramm_distribution.retail }}% розница
+                            {{ udata.diagram.data.retail }}% розница
                         </div>
                         <div class="squareAlign">
                             <div class="square color3"></div>
-                            {{ udata.diagramm_distribution.service }}% услуги
+                            {{ udata.diagram.data.service }}% услуги
                     </div>
                 </div>
                 </div>    
             </div>
-        </div>  
+            </div>  
         <div>
             <div class="graphs" id="report-container-2">
                 <VueApexCharts ref='mychartinstance' type="line" :options="chartOptions" :series="series" height="300" width="100%"></VueApexCharts>

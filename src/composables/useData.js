@@ -26,6 +26,16 @@ class Offers {
     }
 }
 
+class Transactions {
+    constructor(id, name, cost, date, status) {
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+        this.date = date;
+        this.status = status;
+    }
+}
+
 const departments = ref([
     {
         dep_name:'Отдел 1',
@@ -108,26 +118,70 @@ function filterby(period, man_dep){
 const formatNumbers = (number) => {
         if (number === undefined || number === null) return '0';
         return number.toLocaleString('ru-RU')
+}
+
+const diagram = reactive({
+    colors: { wholesale: 'blue', retail: 'red', service: 'green' },
+    data: { wholesale: 20, retail: 60, service: 20 },
+
+    get style() {
+        const { wholesale, retail, service } = this.data;
+        const total = wholesale + retail + service;
+
+        return {
+            width: '250px',
+            height: '250px',
+            borderRadius: '50%',
+            background: `conic-gradient(
+                ${this.colors.wholesale} ${wholesale}%, 
+                ${this.colors.retail} ${wholesale}% ${wholesale + retail}%, 
+                ${this.colors.service} ${wholesale + retail}% ${total}%
+            )`
+        };
     }
+});
 
-const color_bank = reactive({
-    color1: 'blue',
-    color2: 'red',
-    color3: 'green'
-})
+const diagram_spends = reactive({
+    colors: { wholesale: 'blue', retail: 'red', service: 'green' },
+    data: { wholesale: 20, retail: 60, service: 20 },
 
-const diagramm_distribution = reactive({
-        wholesale:20,
-        retail:60,
-        service:20
-    })
+    get style() {
+        const { wholesale, retail, service } = this.data;
+        const total = wholesale + retail + service;
 
-const diagramm_style = reactive({
-        width:'250px',
-        height:'250px',
-        borderRadius:'50%',
-        background: `conic-gradient(${color_bank.color1} ${diagramm_distribution.wholesale}%, ${color_bank.color2} ${diagramm_distribution.wholesale}% ${diagramm_distribution.wholesale + diagramm_distribution.retail}%, ${color_bank.color3} ${diagramm_distribution.wholesale + diagramm_distribution.retail}% ${diagramm_distribution.wholesale + diagramm_distribution.retail + diagramm_distribution.service}%)`
-})
+        return {
+            width: '250px',
+            height: '250px',
+            borderRadius: '50%',
+            background: `conic-gradient(
+                ${this.colors.wholesale} ${wholesale}%, 
+                ${this.colors.retail} ${wholesale}% ${wholesale + retail}%, 
+                ${this.colors.service} ${wholesale + retail}% ${total}%
+            )`
+        };
+    }
+});
+
+const diagram_earnings = reactive({
+    colors: { wholesale: 'blue', retail: 'red', service: 'green' },
+    data: { wholesale: 20, retail: 60, service: 20 },
+
+    get style() {
+        const { wholesale, retail, service } = this.data;
+        const total = wholesale + retail + service;
+
+        return {
+            width: '250px',
+            height: '250px',
+            borderRadius: '50%',
+            background: `conic-gradient(
+                ${this.colors.wholesale} ${wholesale}%, 
+                ${this.colors.retail} ${wholesale}% ${wholesale + retail}%, 
+                ${this.colors.service} ${wholesale + retail}% ${total}%
+            )`
+        };
+    }
+});
 
 const offers = ref([
     new Offers(1,'01.05.2018','Сделка 1','Иван','Завершена', 1000000),
@@ -145,27 +199,6 @@ const logAction = async(action) =>{
             }, 1000);
     })
 }
-
-
-// const toPDF = () => {
-//     const element = document.getElementById('report-container');
-
-//     const options = {
-//         margin: 5,
-//         filename: 'report.pdf',
-//         image: { type: 'jpeg', quality: 0.98 },
-//         html2canvas: { 
-//             scale: 2, 
-//             useCORS: true,
-//             windowWidth: element.scrollWidth,
-//             width:950
-//         },
-//         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-//     };
-
-//     html2pdf().set(options).from(element).save();
-//     logAction('Загрузка в PDF')
-// };
 
 const toPDF = async () => {
     const wrapper = document.createElement('div');
@@ -228,6 +261,12 @@ const filtering = reactive({
     man_dep:''
 })
 
+const transaction = ref([
+    new Transactions(1, 'Транзакция 1', 12345, '10.05.2025', 'Завершена'),
+    new Transactions(2, 'Транзакция 2', 45678, '15.12.2025', 'Отклонена'),
+    new Transactions(3, 'Транзакция 3', 43126, '29.01.2026', 'В процессе'),
+])
+
 export default function useData(){
-    return{totalCompanyMetrics,diagramm_distribution, diagramm_style, color_bank, offers,filterby, toPDF, toXLSX, chartinstance, formatNumbers, filtering}
+    return{totalCompanyMetrics,diagram, diagram_spends, diagram_earnings, offers,filterby, toPDF, toXLSX, chartinstance, formatNumbers, filtering, transaction}
 }
