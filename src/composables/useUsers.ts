@@ -1,11 +1,16 @@
 import { ref } from "vue"
 
-const currentAccount = ref('admin')
+interface ulist {
+    username: string
+    password: string
+}
 
-const userlist = ref([{
+const userlist = ref<ulist[]>([{
     username:'admin',
     password:'admin'
 }])
+
+const currentAccount = ref<ulist>(userlist.value[1])
 
 export default function useUsers(){
     return {userlist,currentAccount}

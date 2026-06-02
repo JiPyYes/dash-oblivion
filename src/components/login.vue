@@ -1,33 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import { reactive, ref } from 'vue';
 import useUsers from '../composables/useUsers';
 const users = useUsers()
 
-const dataget = reactive({
+interface User {
+    username: string
+    password: string
+}
+
+const dataget = reactive<User>({
     username:'',
     password:''
 })
 
-const errormsg = ref('')
+const errormsg = ref<string>('')
 
 function logincheck(){
     errormsg.value = ''
-    let user = users.userlist.value.find((user)=>user.username===dataget.username)
-    let isvalid = true
+    let user: User | undefined = users.userlist.value.find((user: User)=>user.username===dataget.username)
 
-    if(!user){
-        isvalid = false
-    }
-
-    if(!user?.password===dataget.password){
-        isvalid = false
-    }
-
-    if(isvalid){
+    if(user && user?.password === dataget.password){
         users.currentAccount.value = user
-    } else {
-        errormsg.value = 'Неправильный логин или пароль'
-    }
+    } else errormsg.value = 'Неправильный логин или пароль'
 }
 </script>
 
