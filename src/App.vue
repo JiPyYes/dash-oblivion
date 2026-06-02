@@ -1,13 +1,12 @@
-<script setup>
-import { reactive } from 'vue';
+<script setup lang="ts">
 import useData from './composables/useData';
 import useUsers from './composables/useUsers';
 import { router } from './route';
 const users = useUsers()
 const udata = useData()
 function logout(){
-    if (users.currentAccount.value != ''){
-        users.currentAccount.value = ''
+    if (users.currentAccount.value.username !=  '' && users.currentAccount.value.password != ''){
+        users.currentAccount.value = {username: '', password: ''}
     }
     router.push({name: 'login'});
 }
@@ -71,7 +70,7 @@ function logout(){
         <button @click="udata.toPDF">Экспорт в PDF</button>
         <button @click="udata.toXLSX">Экспорт в XLSX</button>
     </div>
-<button @click="logout" v-if="users.currentAccount.value != ''">Выйти</button>
+<button @click="logout" v-if="users.currentAccount.value.username !=  '' && users.currentAccount.value.password != ''">Выйти</button>
 
     </div>
 <RouterView></RouterView>

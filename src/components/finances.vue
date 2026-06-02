@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { reactive } from 'vue';
 import VueApexCharts from 'vue3-apexcharts';
 import useData from '../composables/useData';

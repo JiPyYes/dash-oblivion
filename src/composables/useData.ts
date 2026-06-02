@@ -1,42 +1,40 @@
-import { reactive, ref, computed } from "vue"
+import { reactive, ref, computed, nextTick } from "vue"
 import ExcelJS from 'exceljs'
-import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
 import html2pdf from 'html2pdf.js';
+import VueApexCharts from "vue3-apexcharts";
 
-const chartinstance = ref(null)
+const chartinstance = ref<InstanceType<typeof VueApexCharts> | null>(null)
+
+interface main_metrics {
+    quarter: Metrics, 
+    month: Metrics, 
+    week: Metrics, 
+    day: Metrics
+}
+
+interface depart {
+    dep_name: string, 
+    main_metrics: main_metrics
+}
+
+interface manags {
+    manager_name: string, 
+    main_metrics: main_metrics
+}
 
 class Metrics {
-    constructor(revenue, earnings, clients, conversion) {
-        this.revenue = revenue;
-        this.earnings = earnings;
-        this.clients = clients;
-        this.conversion = conversion;
-    }
+    constructor(public revenue: number,public earnings: number,public clients: number, public conversion: number) {}
 }
 
 class Offers {
-    constructor(id, date, ofn, man, status, total){
-       this.offerid = id;
-       this.date = date;
-       this.offername = ofn;
-       this.manager = man;
-       this.status = status
-       this.total = total 
-    }
+    constructor(public offerid: number, public date: string, public offername: string, public manager: string, public status: string, public total: number){}
 }
 
 class Transactions {
-    constructor(id, name, cost, date, status) {
-        this.id = id;
-        this.name = name;
-        this.cost = cost;
-        this.date = date;
-        this.status = status;
-    }
+    constructor(public id: number, public name: string, public cost:number, public date: string, public status: string) {}
 }
 
-const departments = ref([
+const departments = ref<depart[]>([
     {
         dep_name:'Отдел 1',
         main_metrics:{
@@ -66,7 +64,7 @@ const departments = ref([
     }
 ])
 
-const managers = ref([
+const managers = ref<manags[]>([
     {
         manager_name:'Менеджер 1',
         main_metrics:{
@@ -96,15 +94,15 @@ const managers = ref([
     }
 ])
 
-const totalCompanyMetrics = ref()
+const totalCompanyMetrics = ref<Metrics>()
 
-function filterby(period, man_dep){
-    const entity = [...departments.value, ...managers.value]
+function filterby(period: keyof main_metrics, man_dep: string){
+    const entity : (manags|depart)[] = [...departments.value, ...managers.value]
     if(man_dep != ''){
-        const meter = entity.find((ent)=>ent.manager_name == man_dep || ent.dep_name == man_dep)
-        totalCompanyMetrics.value = meter.main_metrics[period]
+        const meter: (manags|depart) | undefined = entity.find((ent : manags|depart)=>(ent as manags).manager_name == man_dep || (ent as depart).dep_name == man_dep)
+        if (meter){totalCompanyMetrics.value = meter.main_metrics[period]}
     } else {
-        totalCompanyMetrics.value = entity.reduce((acc, entity) => {
+        totalCompanyMetrics.value = entity.reduce((acc: {revenue: number, earnings: number, clients: number, conversion: number}, entity) => {
         const metrics = entity.main_metrics[period]
         acc.revenue += metrics.revenue
         acc.earnings += metrics.earnings
@@ -115,9 +113,10 @@ function filterby(period, man_dep){
     }
 }
 
-const formatNumbers = (number) => {
-        if (number === undefined || number === null) return '0';
+const formatNumbers = (number : number | undefined) => {
+        if (number){
         return number.toLocaleString('ru-RU')
+        }
 }
 
 const diagram = reactive({
@@ -191,8 +190,8 @@ const offers = ref([
 
 filterby('quarter', '')
 
-const logAction = async(action) =>{
-    await new Promise((resolve) => {
+const logAction = async(action: string) =>{
+    await new Promise<void>((resolve) => {
             setTimeout(() => {
                     console.log(`Действие ${action} сохранено`)
                     resolve()
@@ -203,12 +202,18 @@ const logAction = async(action) =>{
 const toPDF = async () => {
     const wrapper = document.createElement('div');
     
-    const el1 = document.getElementById('report-container-1').cloneNode(true);
-    const el2 = document.getElementById('report-container-2').cloneNode(true);
+    let el1 : Node | undefined
+    let el2 : Node | undefined
+
     
+    el1 = document.getElementById('report-container-1')?.cloneNode(true);
+    el2 = document.getElementById('report-container-2')?.cloneNode(true);
+    
+
+    if(el1 && el2){
     wrapper.appendChild(el1);
     wrapper.appendChild(el2);
-    
+    }
     await html2pdf().from(wrapper).save();
     
     await logAction('Экспорт двух элементов в PDF');
@@ -232,8 +237,15 @@ const toXLSX = async() => {
         sheet.addRow(element);
     }
 
-    const chart = chartinstance.value.chart
-    const { imgURI } = await chart.dataURI()
+    const chart = chartinstance.value?.chart
+    
+    let imgURI : string | undefined
+
+    if (chart){
+    const result = await chart.dataURI()
+        if ('imgURI' in result){
+        imgURI = result.imgURI}
+    }
 
     const imageId = workbook.addImage({
         base64: imgURI, 
@@ -256,7 +268,7 @@ const toXLSX = async() => {
     logAction('Загрузка в XLSX')
 }
 
-const filtering = reactive({
+const filtering = reactive<{period: ('quarter' | 'month' | 'week' | 'day'), man_dep: string}>({
     period:'quarter',
     man_dep:''
 })

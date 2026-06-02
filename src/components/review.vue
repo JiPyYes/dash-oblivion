@@ -1,10 +1,19 @@
-<script setup>
+<script setup lang="ts">
 import VueApexCharts from 'vue3-apexcharts';
 import useData from '../composables/useData';
-import { reactive, ref,onMounted, watch } from 'vue';
+import { reactive, ref,onMounted, watch, nextTick } from 'vue';
 import { computed } from 'vue';
+
 const udata = useData()
-const series = ref([
+
+interface metrics_style {
+    revenue: {backgroundColor: string},
+    earnings: {backgroundColor: string},
+    clients: {backgroundColor: string},
+    conversion: {backgroundColor: string}
+}
+
+const series = ref<{name: string, data: [number, number, number, number?]}[]>([
   { name: 'Выручка', data: [30, 40, 35, 50] },
   { name: 'Расходы', data: [20, 25, 20, 30] },
   { name: 'Прибыль', data: [10, 15, 15, 20] }
@@ -17,16 +26,15 @@ const chartOptions = ref({
   xaxis: { categories: ['1 неделя', '2 неделя', '3 неделя', '4 неделя'] },
 })
 
-const mychartinstance = ref(null)
-
-const MetricsWarningColors = reactive({
+const MetricsWarningColors = reactive<metrics_style>({
     revenue: {backgroundColor : 'red'},
     earnings: {backgroundColor: 'red'},
     clients: {backgroundColor: 'red'},
     conversion: {backgroundColor: 'red'} 
 })
 
-function MetricsWarning(period){
+function MetricsWarning(period: typeof udata.filtering.period){
+    if (udata.totalCompanyMetrics.value){
     if (period === 'quarter'){
         if(udata.totalCompanyMetrics.value.revenue >= 100){
             MetricsWarningColors.revenue.backgroundColor = 'green'
@@ -147,6 +155,7 @@ function MetricsWarning(period){
             MetricsWarningColors.conversion.backgroundColor = 'red'
         }
    }
+   }
 }
 
 watch(udata.totalCompanyMetrics, (newValue)=>{
@@ -157,7 +166,7 @@ watch(udata.totalCompanyMetrics, (newValue)=>{
 
 MetricsWarning('quarter')
 
-function ばか(дата){
+function ばか(дата: string){
     switch (дата) {
         case 'month':
             chartOptions.value = {
@@ -198,7 +207,7 @@ function ばか(дата){
     }
 }
 
-const filters = reactive({
+const filters = reactive<{manager: string, status: string}>({
     manager: '',
     status: '',
 });
@@ -265,7 +274,7 @@ const filteredDeals = computed(() => {
             </div>  
         <div>
             <div class="graphs" id="report-container-2">
-                <VueApexCharts ref='mychartinstance' type="line" :options="chartOptions" :series="series" height="300" width="100%"></VueApexCharts>
+                <VueApexCharts :ref='udata.chartinstance' type="line" :options="chartOptions" :series="series" height="300" width="100%"></VueApexCharts>
                  <div class="btns">
                     <button @click="ばか('month')">Месяц</button>
                     <button @click="ばか('квартал')">Квартал</button>
