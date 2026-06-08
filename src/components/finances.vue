@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import VueApexCharts from 'vue3-apexcharts';
 import useData from '../composables/useData';
 
@@ -41,8 +41,145 @@ const chart_dynamics_spends = reactive({
     }
 })
 
+function main_filter(date: 'квартал'| 'месяц' | 'неделя'){
+    switch (date) {
+        case '\u043A\u0432\u0430\u0440\u0442\u0430\u043B':
+            chart_main_stat.series = [
+                { name: 'Выручка', data: [30, 40, 35] },
+                { name: 'Расходы', data: [20, 25, 20] },
+            ]
+            chart_main_stat.chartOptions = {
+                chart: { toolbar: { show: false } },
+                stroke: { width: 3 },
+                colors: ['#2E93fA', '#FF4560'],
+                xaxis: { categories: ['1 месяц', '2 месяц', '3 месяц'] },
+            }
+            break;
 
+        case '\u043C\u0435\u0441\u044F\u0446':
+            chart_main_stat.series = [
+                { name: 'Выручка', data: [30, 40, 35, 50] },
+                { name: 'Расходы', data: [20, 25, 20, 30] },
+            ]
+            chart_main_stat.chartOptions = {
+                chart: { toolbar: { show: false } },
+                stroke: { width: 3 },
+                colors: ['#2E93fA', '#FF4560'],
+                xaxis: { categories: ['1 неделя', '2 неделя', '3 неделя', '4 неделя'] },
+            }
+            break;
 
+        case '\u043D\u0435\u0434\u0435\u043B\u044F':
+            chart_main_stat.series = [
+                { name: 'Выручка', data: [30, 40, 35, 35] },
+                { name: 'Расходы', data: [20, 25, 20, 35] },
+            ]
+            chart_main_stat.chartOptions = {
+                chart: { toolbar: { show: false } },
+                stroke: { width: 3 },
+                colors: ['#2E93fA', '#FF4560'],
+                xaxis: { categories: ['Понедельник', 'Среда', 'Пятница', 'Воскресенье'] },
+            }
+            break;
+    }
+}
+
+function earnings_filter(date: 'квартал'| 'месяц' | 'неделя'){
+    switch (date) {
+        case '\u043A\u0432\u0430\u0440\u0442\u0430\u043B':
+            chart_earnings.series = [
+                { name: 'Выручка', data: [30, 40, 35] },
+                { name: 'Прибыль', data: [20, 25, 20] },
+            ]
+            chart_earnings.chartOptions = {
+                chart: { toolbar: { show: false } },
+                stroke: { width: 3 },
+                colors: ['#2E93fA', '#00E396'],
+                xaxis: { categories: ['1 месяц', '2 месяц', '3 месяц'] },
+            }
+            break;
+
+        case '\u043C\u0435\u0441\u044F\u0446':
+            chart_earnings.series = [
+                { name: 'Выручка', data: [30, 40, 35, 50] },
+                { name: 'Прибыль', data: [20, 25, 20, 30] },
+            ]
+            chart_earnings.chartOptions = {
+                chart: { toolbar: { show: false } },
+                stroke: { width: 3 },
+                colors: ['#2E93fA', '#00E396'],
+                xaxis: { categories: ['1 неделя', '2 неделя', '3 неделя', '4 неделя'] },
+            }
+            break;
+
+        case '\u043D\u0435\u0434\u0435\u043B\u044F':
+            chart_earnings.series = [
+                { name: 'Выручка', data: [30, 40, 35, 15] },
+                { name: 'Прибыль', data: [20, 25, 20, 64] },
+            ]
+            chart_earnings.chartOptions = {
+                chart: { toolbar: { show: false } },
+                stroke: { width: 3 },
+                colors: ['#2E93fA', '#00E396'],
+                xaxis: { categories: ['Понедельник', 'Среда', 'Пятница', 'Воскресенье'] },
+            }
+            break;   
+    }
+}
+
+function dynamics_filter(date: 'квартал'| 'месяц' | 'неделя'){
+    switch (date) {
+        case '\u043A\u0432\u0430\u0440\u0442\u0430\u043B':
+            chart_dynamics_spends.series = [
+                { name: 'Расходы', data: [20, 25, 20] },
+            ]
+            chart_dynamics_spends.chartOptions = {
+                chart: { toolbar: { show: false } },
+                stroke: { width: 3 },
+                colors: [ '#FF4560'],
+                xaxis: { categories: ['1 месяц', '2 месяц', '3 месяц'] },
+            }
+            break;
+
+        case '\u043C\u0435\u0441\u044F\u0446':
+            chart_dynamics_spends.series = [
+                { name: 'Расходы', data: [20, 25, 20, 30] },
+            ]
+            chart_dynamics_spends.chartOptions = {
+                chart: { toolbar: { show: false } },
+                stroke: { width: 3 },
+                colors: ['#FF4560'],
+                xaxis: { categories: ['1 неделя', '2 неделя', '3 неделя', '4 неделя'] },
+            }
+            break;
+
+        case '\u043D\u0435\u0434\u0435\u043B\u044F':
+            chart_dynamics_spends.series = [
+                { name: 'Расходы', data: [20, 25, 20, 50] },
+            ]
+            chart_dynamics_spends.chartOptions = {
+                chart: { toolbar: { show: false } },
+                stroke: { width: 3 },
+                colors: ['#FF4560'],
+                xaxis: { categories: ['Понедельник', 'Среда', 'Пятница', 'Воскресенье'] },
+            }
+            break;
+    }
+}
+
+const table_data = reactive({
+    transaction_name: '',
+    status: ''
+})
+
+const table_filter = computed(()=>{
+    return udata.transaction.value.filter((item)=>{
+        const match_name = table_data.transaction_name ? item.name.toLowerCase().includes(table_data.transaction_name.toLowerCase()) : true
+        const match_status = table_data.status ? item?.status === table_data.status : true
+
+        return match_name && match_status
+    })
+})
 </script>
 
 <template>
@@ -50,12 +187,22 @@ const chart_dynamics_spends = reactive({
     <div class="First-Row">
         <div class="main_stat">
             <p>Основная статистика</p>
-            <VueApexCharts ref='' type="line" :options="chart_main_stat.chartOptions" :series="chart_main_stat.series" height="300" width="650"></VueApexCharts>
+            <VueApexCharts ref='' type="line" :options="chart_main_stat.chartOptions" :series="chart_main_stat.series" height="250" width="650"></VueApexCharts>
+            <div>
+                <button @click="main_filter('квартал')">Квартал</button>
+                <button @click="main_filter('месяц')">Месяц</button>
+                <button @click="main_filter('неделя')">Неделя</button>
+            </div>
         </div>
-
+        
         <div class="dynamics_earnings">
             <p>Динамика чистой прибыли</p>
-            <VueApexCharts ref='' type="line" :options="chart_earnings.chartOptions" :series="chart_earnings.series" height="300" width="650"></VueApexCharts>
+            <VueApexCharts ref='' type="line" :options="chart_earnings.chartOptions" :series="chart_earnings.series" height="250" width="650"></VueApexCharts>
+            <div>
+                <button @click="earnings_filter('квартал')">Квартал</button>
+                <button @click="earnings_filter('месяц')">Месяц</button>
+                <button @click="earnings_filter('неделя')">Неделя</button>
+            </div>
         </div>
     </div>
     <div class="Second-Row">
@@ -63,6 +210,9 @@ const chart_dynamics_spends = reactive({
             <div class="dynamics_spends">
                 <p>Динамика расходов</p>
                 <VueApexCharts ref='' type="line" :options="chart_dynamics_spends.chartOptions" :series="chart_dynamics_spends.series" height="250" width="500"></VueApexCharts>
+            <button @click="dynamics_filter('квартал')">Квартал</button>
+            <button @click="dynamics_filter('месяц')">Месяц</button>
+            <button @click="dynamics_filter('неделя')">Неделя</button>
             </div>
         </div>
         
@@ -130,16 +280,24 @@ const chart_dynamics_spends = reactive({
                 <div class="element">Дата транзакции</div>
                 <div class="element">Статус транзакции</div>
             </div>
-            <div class="container" v-for="transaction in udata.transaction.value">
+            <div class="container" v-for="transaction in table_filter">
                 <div class="element">{{ transaction.id }}</div>
                 <div class="element">{{ transaction.name }}</div>
                 <div class="element">{{ udata.formatNumbers(transaction.cost) }} Руб.</div>
                 <div class="element">{{ transaction.date }}</div>
                 <div class="element">{{ transaction.status }}</div>
             </div>
-        </div>        
+        </div>
     </div>
-
+    <div>
+            <input type="text" v-model="table_data.transaction_name">
+            <select v-model="table_data.status">
+                <option value="">Статус</option>
+                <option value="Завершена">Завершена</option>
+                <option value="Отклонена">Отклонена</option>
+                <option value="В процессе">В процессе</option>
+            </select>
+    </div>
 </div>
 </template>
 <style scoped>
