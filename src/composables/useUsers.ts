@@ -10,7 +10,7 @@ const userlist = ref<ulist[]>([{
     password:'admin'
 }])
 
-const currentAccount = ref<ulist>(userlist.value[1])
+const currentAccount = ref<ulist>(userlist.value[0])
 
 export default function useUsers(){
     return {userlist,currentAccount}
