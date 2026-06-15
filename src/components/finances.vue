@@ -189,9 +189,9 @@ const table_filter = computed(()=>{
             <p>Основная статистика</p>
             <VueApexCharts ref='' type="line" :options="chart_main_stat.chartOptions" :series="chart_main_stat.series" height="250" width="650"></VueApexCharts>
             <div>
-                <button @click="main_filter('квартал')">Квартал</button>
-                <button @click="main_filter('месяц')">Месяц</button>
-                <button @click="main_filter('неделя')">Неделя</button>
+                <button class="button" @click="main_filter('квартал')">Квартал</button>
+                <button class="button" @click="main_filter('месяц')">Месяц</button>
+                <button class="button" @click="main_filter('неделя')">Неделя</button>
             </div>
         </div>
         
@@ -199,9 +199,9 @@ const table_filter = computed(()=>{
             <p>Динамика чистой прибыли</p>
             <VueApexCharts ref='' type="line" :options="chart_earnings.chartOptions" :series="chart_earnings.series" height="250" width="650"></VueApexCharts>
             <div>
-                <button @click="earnings_filter('квартал')">Квартал</button>
-                <button @click="earnings_filter('месяц')">Месяц</button>
-                <button @click="earnings_filter('неделя')">Неделя</button>
+                <button class="button" @click="earnings_filter('квартал')">Квартал</button>
+                <button class="button" @click="earnings_filter('месяц')">Месяц</button>
+                <button class="button" @click="earnings_filter('неделя')">Неделя</button>
             </div>
         </div>
     </div>
@@ -210,9 +210,9 @@ const table_filter = computed(()=>{
             <div class="dynamics_spends">
                 <p>Динамика расходов</p>
                 <VueApexCharts ref='' type="line" :options="chart_dynamics_spends.chartOptions" :series="chart_dynamics_spends.series" height="250" width="500"></VueApexCharts>
-            <button @click="dynamics_filter('квартал')">Квартал</button>
-            <button @click="dynamics_filter('месяц')">Месяц</button>
-            <button @click="dynamics_filter('неделя')">Неделя</button>
+            <button class="button" @click="dynamics_filter('квартал')">Квартал</button>
+            <button class="button" @click="dynamics_filter('месяц')">Месяц</button>
+            <button class="button" @click="dynamics_filter('неделя')">Неделя</button>
             </div>
         </div>
         
@@ -301,6 +301,42 @@ const table_filter = computed(()=>{
 </div>
 </template>
 <style scoped>
+.button{
+    font-size: 14px;
+    font-family: 'JetBrains_Mono';
+    color: black;
+    font-weight: 600;
+    min-width: 100px;
+    border-radius: 10px;
+    margin-right: 5px;
+    min-height: 30px;
+    background-color: aliceblue;
+    cursor: pointer;
+    transition: 0.7s;
+}
+button:hover{
+    color: aliceblue;
+    background-color: black;
+}
+input{
+    font-size: 15px;
+    font-family: 'JetBrains_Mono';
+    border-radius: 7px;
+    background-color: aliceblue;
+    margin-left: 10px;
+    color: black;
+    max-width: 150px;
+    max-height: 40px;
+}
+select{
+    font-size: 15px;
+    font-family: 'JetBrains_Mono';
+    border-radius: 7px;
+    background-color: aliceblue;
+    color: black;
+    max-width: 150px;
+    max-height: 45px;
+}
 .GloryToTheOrangeJesus{
     text-align: center;
     margin-right: 50px;
