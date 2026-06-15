@@ -5,7 +5,7 @@ import finances from "./components/finances.vue";
 import review from "./components/review.vue";
 import sales from "./components/sales.vue";
 import Login from "./components/login.vue";
-import page404 from "./components/page404.vue";
+import page404 from "./components/Page404.vue";
 import useUsers from "./composables/useUsers";
 
 const users = useUsers()
