@@ -6,8 +6,8 @@ interface ulist {
 }
 
 const userlist = ref<ulist[]>([{
-    username:'admin',
-    password:'admin'
+    username:'',
+    password:''
 }])
 
 const currentAccount = ref<ulist>(userlist.value[0])
