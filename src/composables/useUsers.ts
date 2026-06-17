@@ -6,11 +6,11 @@ interface ulist {
 }
 
 const userlist = ref<ulist[]>([{
-    username:'',
-    password:''
+    username:'admin',
+    password:'admin'
 }])
 
-const currentAccount = ref<ulist>(userlist.value[0])
+const currentAccount = ref<ulist>({username: '', password: ''})
 
 export default function useUsers(){
     return {userlist,currentAccount}
