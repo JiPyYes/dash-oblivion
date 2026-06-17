@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import useData from './composables/useData';
 import useUsers from './composables/useUsers';
-import { router } from './route';
+const router = useRouter()
 const users = useUsers()
 const udata = useData()
 function logout(){
     if (users.currentAccount.value.username !=  '' && users.currentAccount.value.password != ''){
+        router.push({name: 'login'});
         users.currentAccount.value = {username: '', password: ''}
     }
-    router.push({name: 'login'});
 }
 </script>
 
@@ -73,7 +74,7 @@ function logout(){
 <button @click="logout" v-if="users.currentAccount.value.username !=  '' && users.currentAccount.value.password != ''">Выйти</button>
 
     </div>
-<RouterView></RouterView>
+<RouterView id="pdf-content"></RouterView>
 </div>
 </template>
 

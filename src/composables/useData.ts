@@ -200,23 +200,32 @@ const logAction = async(action: string) =>{
 }
 
 const toPDF = async () => {
-    const wrapper = document.createElement('div');
-    
-    let el1 : Node | undefined
-    let el2 : Node | undefined
+    const element = document.getElementById('pdf-content'); // Убедитесь, что это ID всего дашборда
+    if (!element) return;
 
-    
-    el1 = document.getElementById('report-container-1')?.cloneNode(true);
-    el2 = document.getElementById('report-container-2')?.cloneNode(true);
-    
+    const originalStyle = element.style.cssText;
+    element.style.overflow = 'visible';
+    element.style.maxHeight = 'none';
 
-    if(el1 && el2){
-    wrapper.appendChild(el1);
-    wrapper.appendChild(el2);
-    }
-    await html2pdf().from(wrapper).save();
-    
-    await logAction('Экспорт двух элементов в PDF');
+    const opt = {
+        margin: 5,
+        filename: 'report.pdf',
+        image: { type: 'jpeg' as const, quality: 0.98 },
+        html2canvas: { 
+            scale: 2, 
+            useCORS: true,
+            // Секрет «полного» захвата:
+            windowWidth: element.scrollWidth,  // Захватываем всю ширину контента
+            windowHeight: element.scrollHeight, // Захватываем всю высоту контента
+            scrollX: 0,
+            scrollY: 0
+        },
+        jsPDF: { unit: 'mm', format: 'a3', orientation: 'landscape' }
+    } as const;
+
+    await html2pdf().set(opt).from(element).save();
+
+    element.style.cssText = originalStyle;
 };
 
 const toXLSX = async() => {

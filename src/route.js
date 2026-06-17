@@ -27,7 +27,9 @@ export const router = createRouter({
 })
 
 router.beforeEach((to, from, next) =>{
-    if(users.currentAccount.value == '' && to.meta.reqauth){
+    if(users.currentAccount.value.username == '' && users.currentAccount.value.password == '' && to.meta.reqauth){
         next('/login')
+    } else if (users.currentAccount.value.username !=  '' && users.currentAccount.value.password != '' && to.name == 'login') {
+        next(from.path)
     } else next()
 })
